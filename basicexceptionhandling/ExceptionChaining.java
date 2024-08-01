@@ -23,6 +23,7 @@ public class ExceptionChaining
         }catch (IOException e)
         {
             System.out.println("File not found.");
+            System.out.println("The exception is:"+e);
             System.out.println("Exception thrown by method handled in main!");
         }
     }
