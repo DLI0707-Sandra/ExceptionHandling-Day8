@@ -2,7 +2,7 @@ package basicexceptionhandling;
 
 import java.util.Scanner;
 
-class NegativeNumberException extends Exception
+class NegativeNumberException extends RuntimeException
 {
     @Override
     public String getMessage() {
