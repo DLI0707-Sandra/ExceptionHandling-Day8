@@ -5,12 +5,25 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
+class FileException extends Exception
+{
+
+}
+
 public class ExceptionChaining
 {
-    public static void ioExceptionMethod(String filename) throws IOException
+    public static void ioExceptionMethod(String filename) throws FileException
     {
         System.out.println("Trying to open"+filename);
-        BufferedReader reader=new BufferedReader(new FileReader(filename));
+        try
+        {
+            BufferedReader reader=new BufferedReader(new FileReader(filename));
+        }catch (IOException e)
+        {
+            System.out.println("Cause of exception:"+e);
+            throw new FileException();
+        }
+
     }
     public static void main(String[] args)
     {
@@ -20,10 +33,9 @@ public class ExceptionChaining
         try
         {
             ioExceptionMethod(filename);
-        }catch (IOException e)
+        }catch (FileException e)
         {
             System.out.println("File not found.");
-            System.out.println("The exception is:"+e);
             System.out.println("Exception thrown by method handled in main!");
         }
     }
