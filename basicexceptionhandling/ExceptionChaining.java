@@ -7,21 +7,25 @@ import java.util.Scanner;
 
 class FileException extends Exception
 {
-
+    FileException(String message)
+    {
+        super(message);
+    }
 }
 
 public class ExceptionChaining
 {
     public static void ioExceptionMethod(String filename) throws FileException
     {
-        System.out.println("Trying to open"+filename);
+        System.out.println("Trying to open "+filename);
         try
         {
             BufferedReader reader=new BufferedReader(new FileReader(filename));
         }catch (IOException e)
         {
-            System.out.println("Cause of exception:"+e);
-            throw new FileException();
+            FileException fileException=new FileException("File not found.");
+            fileException.initCause(new IOException());
+            throw fileException;
         }
 
     }
@@ -35,7 +39,8 @@ public class ExceptionChaining
             ioExceptionMethod(filename);
         }catch (FileException e)
         {
-            System.out.println("File not found.");
+            System.out.println(e.getMessage());
+            System.out.println("Cause:"+e.getCause());
             System.out.println("Exception thrown by method handled in main!");
         }
     }
